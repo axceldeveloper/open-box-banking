@@ -12,7 +12,7 @@ import static reactor.core.publisher.Mono.from;
 
 @EnableDomainEventBus
 public class ReactiveEventsGateway implements EventsGateway {
-    public static final String BOX_CREATED = "box.event.created";
+
     private final DomainEventBus domainEventBus;
 
     public ReactiveEventsGateway(DomainEventBus domainEventBus) {
@@ -20,7 +20,7 @@ public class ReactiveEventsGateway implements EventsGateway {
     }
 
     @Override
-    public Mono<Void> emit(Object event) {
-         return from(domainEventBus.emit(new DomainEvent<>(BOX_CREATED, UUID.randomUUID().toString(), event)));
+    public Mono<Void> emit(String eventName, Object event) {
+        return from(domainEventBus.emit(new DomainEvent<>(eventName, UUID.randomUUID().toString(), event)));
     }
 }

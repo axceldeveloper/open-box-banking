@@ -29,7 +29,7 @@ public class Handler {
 
     public Mono<ServerResponse> createBox(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(Box.class).flatMap(box -> {
-            return createBoxUseCase.createBox(box.getId(), box.getName());
+            return createBoxUseCase.createBox(box.getName());
         }).flatMap(currentBox -> ServerResponse.ok().body(BodyInserters.fromValue(currentBox)));
     }
 

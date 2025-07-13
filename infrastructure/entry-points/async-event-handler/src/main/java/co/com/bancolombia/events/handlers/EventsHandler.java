@@ -14,7 +14,17 @@ public class EventsHandler {
         //this.sampleUseCase = sampleUseCase;
     }
 
-    public Mono<Void> handleEventA(DomainEvent<Object> event) {
+    public Mono<Void> createBoxListenEvent(DomainEvent<Object> event) {
+        log.info("Event received: {} -> {}", event.getName(), event.getData());
+        return Mono.empty();
+    }
+
+    public Mono<Void> openedBoxListenEvent(DomainEvent<Object> event) {
+        log.info("Event received: {} -> {}", event.getName(), event.getData());
+        return Mono.empty();
+    }
+
+    public Mono<Void> closedBoxListenEvent(DomainEvent<Object> event) {
         log.info("Event received: {} -> {}", event.getName(), event.getData());
         return Mono.empty();
     }

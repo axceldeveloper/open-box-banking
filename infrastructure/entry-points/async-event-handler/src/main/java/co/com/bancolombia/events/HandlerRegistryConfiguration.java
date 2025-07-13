@@ -6,11 +6,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class HandlerRegistryConfiguration {
-
-    // see more at: https://reactivecommons.org/reactive-commons-java/#_handlerregistry_2
+    public static final String BOX_CREATED = "box.event.created";
+    public static final String BOX_OPENED = "box.event.opened";
+    public static final String BOX_CLOSED = "box.event.closed";
     @Bean
     public HandlerRegistry handlerRegistry(EventsHandler events) {
         return HandlerRegistry.register()
-                .listenEvent("box.event.created", events::handleEventA, Object.class);
+                .listenEvent(BOX_CREATED, events::createBoxListenEvent, Object.class)
+                .listenEvent(BOX_OPENED, events::openedBoxListenEvent, Object.class)
+                .listenEvent(BOX_CLOSED, events::closedBoxListenEvent, Object.class);
     }
+
+
 }

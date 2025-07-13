@@ -20,6 +20,11 @@ public class MongoRepositoryAdapter extends AdapterOperations<Box, BoxData, Stri
         return repository.findById(id).map(this::toEntity);
     }
 
+    public Mono<Box> findByName(String name){
+        return repository.findByName(name)
+                .map(this::toEntity);
+    }
+
     public Mono<Box> save(Box box){
         BoxData boxObject = new BoxData();
         boxObject.setName(box.getName());

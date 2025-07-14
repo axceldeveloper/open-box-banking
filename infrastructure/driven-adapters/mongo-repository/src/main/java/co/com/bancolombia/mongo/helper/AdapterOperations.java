@@ -34,8 +34,12 @@ public abstract class AdapterOperations<E, D, I, R extends ReactiveCrudRepositor
                 .map(this::toEntity);
     }
 
-    public Flux<E> saveAll(Flux<E> entities) {
-        return doQueryMany(repository.saveAll(entities.map(this::toData)));
+    public Flux<E> saveAll(Flux<Object> entities) {
+        return entities
+                .map(e -> (E) e)
+                .map(this::toData)
+                .flatMap(this::saveData)
+                .map(this::toEntity);
     }
 
     public Mono<E> findById(I id) {

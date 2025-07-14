@@ -14,6 +14,7 @@ public class RouterRest {
     public RouterFunction<ServerResponse> routerFunction(Handler handler) {
         return route(PUT("/api/close"), handler::close)
                 .andRoute(PUT("/api/open"), handler::open)
-                .and(route(POST("/api/create"), handler::createBox));
+                .and(route(POST("/api/create"), handler::createBox)
+                .andRoute(POST("/api/boxes/{boxId}/movements"), handler::uploadMovements));
     }
 }

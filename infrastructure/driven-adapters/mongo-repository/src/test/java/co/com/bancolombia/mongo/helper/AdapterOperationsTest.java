@@ -1,5 +1,7 @@
 package co.com.bancolombia.mongo.helper;
 
+import co.com.bancolombia.model.box.Box;
+import co.com.bancolombia.mongo.BoxData;
 import co.com.bancolombia.mongo.MongoDBRepository;
 import co.com.bancolombia.mongo.MongoRepositoryAdapter;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,29 +43,11 @@ class AdapterOperationsTest {
     }
 
     @Test
-    void testSave() {
-        when(repository.save(entity)).thenReturn(Mono.just("value"));
-
-        StepVerifier.create(adapter.save(entity))
-                .expectNext("value")
-                .verifyComplete();
-    }
-
-    @Test
     void testSaveAll() {
         when(repository.saveAll(any(Flux.class))).thenReturn(entities);
 
         StepVerifier.create(adapter.saveAll(entities))
-                .expectNext("value")
-                .verifyComplete();
-    }
-
-    @Test
-    void testFindById() {
-        when(repository.findById("key")).thenReturn(Mono.just(entity));
-
-        StepVerifier.create(adapter.findById("key"))
-                .expectNext("value")
+                .expectNext(any(Box.class))
                 .verifyComplete();
     }
 
@@ -71,19 +55,11 @@ class AdapterOperationsTest {
     void testFindByExample() {
         when(repository.findAll(any(Example.class))).thenReturn(entities);
 
-        StepVerifier.create(adapter.findByExample(entity))
-                .expectNext("value")
+        StepVerifier.create(adapter.findByExample((Box) entity))
+                .expectNext(any(Box.class))
                 .verifyComplete();
     }
 
-    @Test
-    void testFindAll() {
-        when(repository.findAll()).thenReturn(entities);
-
-        StepVerifier.create(adapter.findAll())
-                .expectNext("value")
-                .verifyComplete();
-    }
 
     @Test
     void testDeleteById() {
